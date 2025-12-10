@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>knockKnockArt | The Studio</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            'apple-gray': '#f5f5f7',
+            'apple-dark': '#1d1d1f',
+            'apple-blue': '#0071e3',
+            'apple-text': '#86868b',
+            'card-bg': '#ffffff',
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: 0, transform: 'translateY(30px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' },
+            }
+          },
+          boxShadow: {
+            'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
+            'subtle': '0 10px 40px -10px rgba(0,0,0,0.05)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color:#fff; color:#1d1d1f; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial; }
+
+    .cursor-dot { position: fixed; width: 8px; height: 8px; background-color: black; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.25s, height 0.25s, background-color 0.25s; }
+
+    .reveal-element { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-element.visible { opacity: 1; transform: translateY(0); }
+
+    .bento-card { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease; }
+    .bento-card:hover { transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+
+    .glass-bottom { border-radius: 18px; background: rgba(255,255,255,0.04); backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+
+    ::-webkit-scrollbar { width:0; background:transparent; }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor (hidden on small screens) -->
+  <div class="cursor-dot hidden md:block" id="cursorDot"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 bg-white/70 backdrop-blur border-b border-gray-200/50">
+    <div class="max-w-[980px] mx-auto px-4">
+      <div class="flex justify-between items-center h-12 text-xs font-medium">
+        <a href="#" class="text-lg font-semibold tracking-tight text-black opacity-90 hover:opacity-100 transition-opacity">knockKnockArt</a>
+
+        <div class="hidden md:flex space-x-8 text-black/80">
+          <a href="#services" class="hover:text-apple-blue transition-colors">Services</a>
+          <a href="#contact" class="hover:text-apple-blue transition-colors">Contact</a>
+        </div>
+
+        <div class="md:hidden">
+          <button id="mobile-menu-btn" class="text-black p-3 rounded-md touch-manage" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 bg-white translate-x-full transition-transform duration-400 pt-20 px-6 md:hidden" aria-hidden="true">
+    <div class="flex flex-col space-y-6 text-2xl font-semibold text-apple-dark">
+      <a href="#services" class="border-b border-gray-100 pb-4 nav-link-mobile">Services</a>
+      <a href="#contact" class="border-b border-gray-100 pb-4 nav-link-mobile">Contact</a>
+    </div>
+    <button id="close-menu-btn" class="absolute top-3 right-4 p-2 bg-gray-100 rounded-full" aria-label="Close menu">
+      <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
+  </div>
+
+  <!-- HERO -->
+  <header class="relative w-full min-h-[60vh] lg:min-h-[100vh] overflow-visible bg-white pt-12">
+    <div class="absolute inset-0 pointer-events-none">
+      <canvas id="hero-canvas" class="w-full h-full"></canvas>
+    </div>
+
+    <!-- Use object-contain so the full image is visible on small screens -->
+    <img src="5.jpg" alt="Welcome to ArtFlow studio — mural & workshops" loading="lazy"
+         class="absolute inset-0 m-auto w-full h-full object-contain max-h-[100vh]" style="max-width:100%;" />
+
+    <div class="relative z-10 max-w-[980px] mx-auto px-6 py-14 lg:py-28 flex flex-col items-center text-center">
+      <p class="text-sm font-medium tracking-wide mb-4 reveal-element bg-clip-text text-black" style="transition-delay:100ms;">Welcome</p>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight drop-shadow-sm reveal-element visible" style="transition-delay:150ms;">
+        Creativity.<br /><span class="text-black">Redefined.</span>
+      </h1>
+    </div>
+
+    <div class="absolute left-0 right-0 bottom-0 h-20 md:h-24 pointer-events-none"
+         style="background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.6) 40%, rgba(255,255,255,0) 100%);"></div>
+  </header>
+
+  <!-- ... (keep Services, Gallery, vertical videos) ... -->
+
+  <!-- VERTICAL VIDEOS SECTION (unchanged visual structure) -->
+  <section id="vertical-videos" class="py-20 bg-white">
+    <div class="max-w-[980px] mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-black mb-8 text-center">Some Videos of My art!</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Example card: video elements have playsinline + muted -->
+        <div class="rounded-3xl overflow-hidden shadow-subtle bg-black aspect-[3/4]">
+          <video controls playsinline preload="metadata" poster="20.jpg" class="w-full h-full object-cover hover-autoplay" muted>
+            <source src="v1.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <div class="rounded-3xl overflow-hidden shadow-subtle bg-black aspect-[3/4]">
+          <video controls playsinline preload="metadata" poster="22.jpg" class="w-full h-full object-cover hover-autoplay" muted>
+            <source src="v2.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose My Artistry -->
+  <section id="why-choose" class="py-24 bg-white">
+    <div class="max-w-[1100px] mx-auto px-6 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">Why Choose My Artistry?</h2>
+      <p class="text-lg md:text-xl text-apple-text mb-16 max-w-2xl mx-auto">Combining artistic excellence with professional service to deliver murals that exceed expectations</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
+          <div class="text-4xl md:text-5xl mb-3">🎨</div>
+          <h3 class="text-xl font-semibold mb-2">Custom Design Process</h3>
+          <p class="text-apple-text">Every mural is uniquely designed to match your space, style, and vision through collaborative consultation.</p>
+        </div>
+        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
+          <div class="text-4xl md:text-5xl mb-3">⭐</div>
+          <h3 class="text-xl font-semibold mb-2">Professional Quality</h3>
+          <p class="text-apple-text">Premium paints + refined techniques produce vibrant artwork that lasts for years.</p>
+        </div>
+        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
+          <div class="text-4xl md:text-5xl mb-3">🏡</div>
+          <h3 class="text-xl font-semibold mb-2">Space Transformation</h3>
+          <p class="text-apple-text">Expert ability to elevate architectural features & create extraordinary focal points.</p>
+        </div>
+        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
+          <div class="text-4xl md:text-5xl mb-3">🎭</div>
+          <h3 class="text-xl font-semibold mb-2">Diverse Styles</h3>
+          <p class="text-apple-text">Artistic range from photorealistic to abstract, botanical to geometric, contemporary to traditional.</p>
+        </div>
+        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
+          <div class="text-4xl md:text-5xl mb-3">📋</div>
+          <h3 class="text-xl font-semibold mb-2">Project Management</h3>
+          <p class="text-apple-text">Clear planning, communication, and timelines from concept to final installation.</p>
+        </div>
+        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
+          <div class="text-4xl md:text-5xl mb-3">✅</div>
+          <h3 class="text-xl font-semibold mb-2">Satisfaction Guarantee</h3>
+          <p class="text-apple-text">Complete satisfaction ensured with revisions and quality assurance throughout the process.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- My Creative Process -->
+  <section class="py-24 bg-apple-gray/30">
+    <div class="max-w-[1100px] mx-auto px-6 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">My Creative Process</h2>
+      <p class="text-lg md:text-xl text-apple-text mb-16 max-w-2xl mx-auto">A structured approach ensuring your vision comes to life exactly as imagined</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+        <div>
+          <div class="w-20 h-20 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-xl font-semibold mb-4">01</div>
+          <h3 class="text-lg font-semibold mb-2">Consultation</h3>
+          <p class="text-apple-text">We discuss your vision, space, style preferences, and project requirements in detail.</p>
+        </div>
+
+        <div>
+          <div class="w-20 h-20 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-xl font-semibold mb-4">02</div>
+          <h3 class="text-lg font-semibold mb-2">Design Development</h3>
+          <p class="text-apple-text">Initial sketches & concepts refined based on your feedback.</p>
+        </div>
+
+        <div>
+          <div class="w-20 h-20 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-xl font-semibold mb-4">03</div>
+          <h3 class="text-lg font-semibold mb-2">Preparation</h3>
+          <p class="text-apple-text">Wall preparation, priming, and workspace setup for optimal painting conditions.</p>
+        </div>
+
+        <div>
+          <div class="w-20 h-20 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-xl font-semibold mb-4">04</div>
+          <h3 class="text-lg font-semibold mb-2">Creation</h3>
+          <p class="text-apple-text">Detailed painting with regular progress updates.</p>
+        </div>
+
+        <div>
+          <div class="w-20 h-20 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-xl font-semibold mb-4">05</div>
+          <h3 class="text-lg font-semibold mb-2">Finishing</h3>
+          <p class="text-apple-text">Premium paints. UV-resistant topcoat and final detailing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact (unchanged) -->
+  <section id="contact" class="py-32 bg-white">
+    <div class="max-w-2xl mx-auto px-6 text-center reveal-element">
+      <h2 class="text-4xl md:text-5xl font-bold text-black mb-6">Let's create something.</h2>
+      <p class="text-xl text-apple-text mb-12">Whether it's a mural for your office or a gift for a friend.</p>
+
+      <form class="space-y-4 text-left" onsubmit="event.preventDefault(); alert('Message sent.');">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input type="text" placeholder="Name" aria-label="Name" class="w-full p-4 bg-apple-gray rounded-xl border-none focus:ring-2 focus:ring-apple-blue outline-none transition-shadow text-black placeholder-gray-500" />
+          <input type="email" placeholder="Email" aria-label="Email" class="w-full p-4 bg-apple-gray rounded-xl border-none focus:ring-2 focus:ring-apple-blue outline-none transition-shadow text-black placeholder-gray-500" />
+        </div>
+        <textarea rows="4" placeholder="Your idea..." aria-label="Your idea" class="w-full p-4 bg-apple-gray rounded-xl border-none focus:ring-2 focus:ring-apple-blue outline-none transition-shadow text-black placeholder-gray-500"></textarea>
+
+        <div class="flex justify-center pt-4">
+          <button type="submit" class="px-12 py-4 bg-black text-white rounded-full font-medium text-lg hover:scale-105 transition-transform">Send Message</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- TRANSPARENT GLASS BOTTOM BAR (smaller on mobile) -->
+  <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[60] w-[94%] max-w-xl md:bottom-6 md:w-[90%]">
+    <div class="w-full flex items-center justify-between gap-3 px-3 py-2 glass-bottom" role="navigation" aria-label="quick actions">
+      <a href="#gallery" class="flex-1 text-center py-2 rounded-2xl font-semibold bg-white/3 hover:bg-white/6 text-black transition-all">View Portfolio</a>
+      <a href="#why-choose" class="flex-1 text-center py-2 rounded-2xl font-medium bg-white/3 hover:bg-white/6 text-black transition-all">Learn more</a>
+    </div>
+  </div>
+
+  <div class="h-28 md:h-20"></div>
+
+  <!-- footer (unchanged) -->
+  <footer class="bg-apple-gray py-12 border-t border-gray-200">
+    <div class="max-w-[980px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="text-xs text-gray-500">Copyright © 2023 ArtFlow Studio Inc. All rights reserved.</div>
+        <div class="flex space-x-6 text-xs text-gray-600">
+          <a href="#" class="hover:underline">Privacy Policy</a>
+          <a href="#" class="hover:underline">Terms of Use</a>
+          <a href="#" class="hover:underline">Sales Policy</a>
+          <a href="#" class="hover:underline">Legal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox (unchanged) -->
+  <div id="lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/70 p-6">
+    <div class="max-w-[1100px] w-full relative">
+      <button id="lightbox-close" class="absolute top-3 right-3 p-2 rounded-full bg-white/90 z-20" aria-label="Close lightbox">
+        <i data-lucide="x" class="w-5 h-5 text-black"></i>
+      </button>
+      <img id="lightbox-image" class="w-full rounded-2xl shadow-2xl hidden" alt="Enlarged photo" />
+      <video id="lightbox-video" class="w-full rounded-2xl shadow-2xl hidden" controls playsinline></video>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    lucide.createIcons();
+
+    // small helpers & intersection reveal (unchanged)
+    const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+
+    // Mobile menu toggle - improved aria handling
+    (function(){
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const closeBtn = document.getElementById('close-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (!menuBtn || !mobileMenu) return;
+      function toggleMenu() {
+        const opened = mobileMenu.classList.toggle('translate-x-full');
+        document.body.classList.toggle('overflow-hidden');
+        menuBtn.setAttribute('aria-expanded', String(!opened));
+        mobileMenu.setAttribute('aria-hidden', String(opened));
+      }
+      menuBtn.addEventListener('click', toggleMenu);
+      if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
+      document.querySelectorAll('.nav-link-mobile').forEach(a => a.addEventListener('click', toggleMenu));
+    })();
+
+    // lightbox (unchanged from your code)
+    (function() {
+      const lightbox = document.getElementById('lightbox');
+      const lbImage = document.getElementById('lightbox-image');
+      const lbVideo = document.getElementById('lightbox-video');
+      const closeBtn = document.getElementById('lightbox-close');
+
+      function openImage(src, alt='') {
+        if (!lightbox) return;
+        if (lbVideo) { lbVideo.pause(); lbVideo.classList.add('hidden'); lbVideo.removeAttribute('src'); }
+        if (lbImage) { lbImage.src = src; lbImage.alt = alt; lbImage.classList.remove('hidden'); }
+        lightbox.classList.remove('hidden'); document.body.style.overflow = 'hidden';
+      }
+
+      function openVideo(src) {
+        if (!lightbox) return;
+        if (lbImage) { lbImage.classList.add('hidden'); lbImage.removeAttribute('src'); }
+        if (lbVideo) {
+          lbVideo.src = src;
+          lbVideo.classList.remove('hidden');
+          lbVideo.muted = true;
+          lbVideo.play().catch(()=>{});
+        }
+        lightbox.classList.remove('hidden'); document.body.style.overflow = 'hidden';
+      }
+
+      document.addEventListener('click', (e) => {
+        const img = e.target.closest('.gallery-item img');
+        if (img && img.closest('.gallery-item')) {
+          const parent = img.closest('.gallery-item');
+          if (parent.dataset.type === 'video') {
+            const btn = parent.querySelector('.open-lightbox');
+            if (btn && btn.dataset && btn.dataset.src) openVideo(btn.dataset.src);
+            else openImage(img.src, img.alt || '');
+          } else {
+            openImage(img.src, img.alt || '');
+          }
+        }
+        const playBtn = e.target.closest('.open-lightbox');
+        if (playBtn && playBtn.dataset && playBtn.dataset.type === 'video') {
+          const src = playBtn.dataset.src || playBtn.getAttribute('data-src');
+          if (src) openVideo(src);
+        }
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', () => {
+        lightbox.classList.add('hidden');
+        if (lbVideo) { lbVideo.pause(); lbVideo.currentTime = 0; lbVideo.removeAttribute('src'); lbVideo.classList.add('hidden'); }
+        if (lbImage) { lbImage.removeAttribute('src'); lbImage.classList.add('hidden'); }
+        document.body.style.overflow = '';
+      });
+
+      if (lightbox) {
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeBtn.click(); });
+      }
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox && !lightbox.classList.contains('hidden')) closeBtn.click(); });
+    })();
+
+    // Hover-autoplay for desktop + touch handlers for mobile
+    (function(){
+      const vids = document.querySelectorAll('video.hover-autoplay');
+
+      vids.forEach(v => {
+        // Desktop hover play/pause (mouse)
+        v.addEventListener('mouseenter', async () => {
+          v.muted = true;
+          try { await v.play(); } catch(e) { /* ignore */ }
+        });
+        v.addEventListener('mouseleave', () => {
+          v.pause(); v.currentTime = 0;
+        });
+
+        // Touch: single tap toggles play/pause (mobile-friendly)
+        v.addEventListener('touchstart', function touchStartHandler(e) {
+          // if controls present, allow default tap to show controls; but we still toggle
+          if (v.paused) {
+            v.muted = true;
+            v.play().catch(()=>{});
+          } else {
+            v.pause();
+            v.currentTime = 0;
+          }
+          // prevent accidental double handling
+          e.stopPropagation();
+        }, { passive: true });
+      });
+    })();
+
+    // Custom cursor only on non-touch devices
+    (function(){
+      const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+      const cursor = document.getElementById('cursorDot');
+      if (!cursor || isTouch) return;
+      window.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+      const interactive = document.querySelectorAll('a, button, .bento-card, input, textarea');
+      interactive.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width = '20px';
+          cursor.style.height = '20px';
+          cursor.style.backgroundColor = 'rgba(0,113,227,0.18)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width = '8px';
+          cursor.style.height = '8px';
+          cursor.style.backgroundColor = 'black';
+        });
+      });
+    })();
+
+    // NOTE: other scripts (canvas blobs, gallery filters) can remain as you had them.
+  </script>
+</body>
+</html>
