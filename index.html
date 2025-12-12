@@ -49,87 +49,294 @@
   </script>
 
   <style>
-    body { background-color:#fff; color:#1d1d1f; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial; }
+    body {
+      background-color: #fff;
+      color: #1d1d1f;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
 
-    .cursor-dot { position: fixed; width: 8px; height: 8px; background-color: black; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.25s, height 0.25s, background-color 0.25s; }
+    .cursor-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background-color: black;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s, height 0.25s, background-color 0.25s;
+    }
 
-    .reveal-element { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16,1,0.3,1); }
-    .reveal-element.visible { opacity: 1; transform: translateY(0); }
+    .reveal-element {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-element.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     .bento-card { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease; }
     .bento-card:hover { transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
 
-    .glass-bottom { border-radius: 18px; background: rgba(255,255,255,0.04); backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+    /* Glass bottom bar custom look */
+    .glass-bottom {
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px) saturate(140%);
+      -webkit-backdrop-filter: blur(8px) saturate(140%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
 
-    ::-webkit-scrollbar { width:0; background:transparent; }
+    /* Hide scrollbar for clean look */
+    ::-webkit-scrollbar { width: 0px; background: transparent; }
   </style>
 </head>
 <body>
 
-  <!-- Custom cursor (hidden on small screens) -->
+  <!-- Custom cursor -->
   <div class="cursor-dot hidden md:block" id="cursorDot"></div>
 
   <!-- Navigation -->
-  <nav class="fixed w-full z-50 bg-white/70 backdrop-blur border-b border-gray-200/50">
-    <div class="max-w-[980px] mx-auto px-4">
-      <div class="flex justify-between items-center h-12 text-xs font-medium">
-        <a href="#" class="text-lg font-semibold tracking-tight text-black opacity-90 hover:opacity-100 transition-opacity">knockKnockArt</a>
+<nav class="fixed w-full z-50 bg-white/70 backdrop-blur border-b border-gray-200/50">
+  <div class="max-w-[980px] mx-auto px-4">
+    <div class="flex justify-between items-center h-12 text-xs font-medium">
+      <a href="#" class="text-lg font-semibold tracking-tight text-black opacity-90 hover:opacity-100 transition-opacity">
+        knockKnockArt
+      </a>
 
-        <div class="hidden md:flex space-x-8 text-black/80">
-          <a href="#services" class="hover:text-apple-blue transition-colors">Services</a>
-          <a href="#contact" class="hover:text-apple-blue transition-colors">Contact</a>
-        </div>
+      <div class="hidden md:flex space-x-8 text-black/80">
+        <a href="#services" class="hover:text-apple-blue transition-colors">Services</a>
+        <a href="#contact" class="hover:text-apple-blue transition-colors">Contact</a>
+      </div>
 
-        <div class="md:hidden">
-          <button id="mobile-menu-btn" class="text-black p-3 rounded-md touch-manage" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-            <i data-lucide="menu" class="w-5 h-5"></i>
-          </button>
-        </div>
+      <div class="md:hidden">
+        <button id="mobile-menu-btn" class="text-black p-2" aria-label="Open menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
       </div>
     </div>
-  </nav>
-
-  <!-- Mobile menu -->
-  <div id="mobile-menu" class="fixed inset-0 z-40 bg-white translate-x-full transition-transform duration-400 pt-20 px-6 md:hidden" aria-hidden="true">
-    <div class="flex flex-col space-y-6 text-2xl font-semibold text-apple-dark">
-      <a href="#services" class="border-b border-gray-100 pb-4 nav-link-mobile">Services</a>
-      <a href="#contact" class="border-b border-gray-100 pb-4 nav-link-mobile">Contact</a>
-    </div>
-    <button id="close-menu-btn" class="absolute top-3 right-4 p-2 bg-gray-100 rounded-full" aria-label="Close menu">
-      <i data-lucide="x" class="w-5 h-5"></i>
-    </button>
   </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed inset-0 z-40 bg-white translate-x-full transition-transform duration-500 pt-20 px-6 md:hidden">
+  <div class="flex flex-col space-y-6 text-2xl font-semibold text-apple-dark">
+    <a href="#services" class="border-b border-gray-100 pb-4 nav-link-mobile">Services</a>
+    <a href="#contact" class="border-b border-gray-100 pb-4 nav-link-mobile">Contact</a>
+  </div>
+  <button id="close-menu-btn" class="absolute top-3 right-4 p-2 bg-gray-100 rounded-full" aria-label="Close menu">
+    <i data-lucide="x" class="w-5 h-5"></i>
+  </button>
+</div>
 
   <!-- HERO -->
-  <header class="relative w-full min-h-[60vh] lg:min-h-[100vh] overflow-visible bg-white pt-12">
+  <header class="relative w-full min-h-[70vh] lg:min-h-[100vh] overflow-visible bg-white pt-12">
+    <!-- Canvas required by your JS -->
     <div class="absolute inset-0 pointer-events-none">
       <canvas id="hero-canvas" class="w-full h-full"></canvas>
     </div>
 
-    <!-- Use object-contain so the full image is visible on small screens -->
-    <img src="5.jpg" alt="Welcome to ArtFlow studio — mural & workshops" loading="lazy"
-         class="absolute inset-0 m-auto w-full h-full object-contain max-h-[100vh]" style="max-width:100%;" />
+    <!-- Background image -->
+    <img src="5.jpg" alt="Welcome to ArtFlow studio — mural & workshops"
+         loading="lazy"
+         class="absolute inset-0 m-auto max-h-[100vh] w-auto h-auto object-center"
+         style="max-width:100%;" />
 
-    <div class="relative z-10 max-w-[980px] mx-auto px-6 py-14 lg:py-28 flex flex-col items-center text-center">
-      <p class="text-sm font-medium tracking-wide mb-4 reveal-element bg-clip-text text-black" style="transition-delay:100ms;">Welcome</p>
-      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight drop-shadow-sm reveal-element visible" style="transition-delay:150ms;">
-        Creativity.<br /><span class="text-black">Redefined.</span>
+    <div class="relative z-10 max-w-[980px] mx-auto px-6 py-24 lg:py-32 flex flex-col items-center text-center">
+      <p class="text-sm font-medium tracking-wide mb-4 reveal-element bg-clip-text text-black" style="transition-delay: 100ms;">Welcome</p>
+
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight drop-shadow-sm reveal-element visible" style="transition-delay: 150ms;">
+        Creativity.<br />
+        <span class="text-black">Redefined.</span>
       </h1>
     </div>
 
-    <div class="absolute left-0 right-0 bottom-0 h-20 md:h-24 pointer-events-none"
-         style="background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.6) 40%, rgba(255,255,255,0) 100%);"></div>
+    <div class="absolute left-0 right-0 bottom-0 h-24 pointer-events-none"
+         style="background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.65) 40%, rgba(255,255,255,0) 100%);">
+    </div>
   </header>
 
-  <!-- ... (keep Services, Gallery, vertical videos) ... -->
+  <!-- Services -->
+  <section id="services" class="py-32 bg-apple-gray">
+    <div class="max-w-[980px] mx-auto px-6">
+      <div class="mb-16 reveal-element">
+        <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">Our Craft.</h2>
+        <p class="text-xl text-apple-text max-w-lg">Designed to inspire. Built to last.</p>
+      </div>
 
-  <!-- VERTICAL VIDEOS SECTION (unchanged visual structure) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 grid-rows-2 h-auto md:h-[600px]">
+        <div class="bg-white rounded-3xl p-8 md:col-span-2 row-span-2 bento-card relative overflow-hidden group reveal-element">
+          <div class="relative z-10 h-full flex flex-col justify-between">
+            <div>
+              <p class="text-sm font-semibold text-apple-text uppercase tracking-wide mb-2">Large Scale</p>
+              <h3 class="text-3xl font-bold text-black mb-2">Murals & Street Art</h3>
+              <p class="text-apple-text text-lg max-w-sm">Transforming dull walls into vibrant storytelling canvases for businesses and communities.</p>
+            </div>
+            <div class="mt-8">
+              <a href="#contact" class="inline-flex items-center text-apple-blue font-medium hover:underline">Get a Quote <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+            </div>
+          </div>
+          <img src="16.jpg" class="absolute right-0 bottom-0 w-2/3 h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" alt="Mural preview">
+          <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
+        </div>
+
+        <div class="relative bg-white rounded-3xl p-8 overflow-hidden bento-card reveal-element">
+          <div class="relative z-10 h-full flex flex-col justify-between">
+            <div>
+              <p class="text-sm font-semibold text-apple-text uppercase tracking-wide mb-2">Hands-on</p>
+              <h3 class="text-3xl font-bold text-black mb-2">Workshops</h3>
+              <p class="text-apple-text text-lg max-w-sm">Pottery, resin, acrylics & guided art sessions.</p>
+            </div>
+          </div>
+          <img src="23.jpg" class="absolute right-0 bottom-0 w-2/3 h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" alt="Workshop preview">
+          <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
+        </div>
+
+        <div class="relative bg-white rounded-3xl p-8 overflow-hidden bento-card reveal-element">
+          <div class="relative z-10 h-full flex flex-col justify-between">
+            <div>
+              <p class="text-sm font-semibold text-apple-text uppercase tracking-wide mb-2">Custom Art</p>
+              <h3 class="text-3xl font-bold text-black mb-2">Commissions</h3>
+              <p class="text-apple-text text-lg max-w-sm">Personalized art crafted to your vision.</p>
+            </div>
+          </div>
+          <img src="14.jpg" class="absolute right-0 bottom-0 w-2/3 h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" alt="Commission preview">
+          <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="py-32 bg-white">
+    <div class="max-w-[980px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal-element">
+        <div>
+          <h2 class="text-4xl md:text-5xl font-bold text-black mb-2">Gallery.</h2>
+          <p class="text-xl text-apple-text">A collection of moments.</p>
+        </div>
+        <div class="flex space-x-1 bg-apple-gray p-1 rounded-full mt-6 md:mt-0">
+          <button class="filter-btn active px-4 py-1.5 rounded-full text-xs font-medium text-black bg-white shadow-sm transition-all" data-filter="all">All</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium text-apple-text hover:text-black transition-all" data-filter="mural">Murals</button>
+          <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium text-apple-text hover:text-black transition-all" data-filter="canvas">Canvas</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Gallery items (images) -->
+        <div class="gallery-item mural group cursor-pointer reveal-element">
+          <div class="overflow-hidden rounded-3xl shadow-sm mb-4 aspect-[4/3]">
+            <img src="7.jpg" alt="Commissioned Artwork" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+          </div>
+          <div class="flex justify-between items-center px-1">
+            <div>
+              <h4 class="text-lg font-semibold text-black">Commissioned Artwork</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item canvas group cursor-pointer reveal-element" style="transition-delay: 100ms;">
+          <div class="overflow-hidden rounded-3xl shadow-sm mb-4 aspect-[4/3]">
+            <img src="3.jpg" alt="Mural" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+          </div>
+          <div class="flex justify-between items-center px-1">
+            <div>
+              <h4 class="text-lg font-semibold text-black">Mural</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item digital group cursor-pointer reveal-element">
+          <div class="overflow-hidden rounded-3xl shadow-sm mb-4 aspect-[4/3]">
+            <img src="8.jpg" alt="Abstract" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+          </div>
+          <div class="flex justify-between items-center px-1">
+            <div>
+              <h4 class="text-lg font-semibold text-black">Abstract</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item canvas group cursor-pointer reveal-element" style="transition-delay: 100ms;">
+          <div class="overflow-hidden rounded-3xl shadow-sm mb-4 aspect-[4/3]">
+            <img src="23.jpg" alt="Workshop" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+          </div>
+          <div class="flex justify-between items-center px-1">
+            <div>
+              <h4 class="text-lg font-semibold text-black">Workshop</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="h-28"></div>
+
+      <!-- One gallery photo (photo instead of video) -->
+      <div class="gallery-item mural group cursor-pointer reveal-element">
+        <div class="overflow-hidden rounded-3xl shadow-sm mb-4 aspect-[4/3]">
+          <img src="1.jpg" alt="Gallery Photo" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        </div>
+        <div class="flex justify-between items-center px-1">
+          <div>
+            <h4 class="text-lg font-semibold text-black">Wall Art</h4>
+            <p class="text-sm text-apple-text"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 vertical photos -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+        <div class="gallery-item group cursor-pointer reveal-element">
+          <div class="overflow-hidden rounded-3xl shadow-sm mb-4 aspect-[3/5]">
+            <img src="18.jpg" alt="Glass Art" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          </div>
+          <div class="flex justify-between items-center px-1">
+            <div>
+              <h4 class="text-lg font-semibold text-black">Glass Art</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item group cursor-pointer reveal-element">
+          <div class="overflow-hidden rounded-3xl shadow-sm mb-4 aspect-[3/5]">
+            <img src="19.jpg" alt="Glass Art 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          </div>
+          <div class="flex justify-between items-center px-1">
+            <div>
+              <h4 class="text-lg font-semibold text-black">Glass Art 2</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item group cursor-pointer reveal-element">
+          <div class="overflow-hidden rounded-3xl shadow-sm mb-4 aspect-[3/5]">
+            <img src="2.jpg" alt="Pet store Art" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          </div>
+          <div class="flex justify-between items-center px-1">
+            <div>
+              <h4 class="text-lg font-semibold text-black">Pet store Art</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- hidden buttons for manual lightbox trigger if needed -->
+      <button class="sr-only open-lightbox" data-type="video" data-src="v3.mp4" aria-label="Play video"></button>
+    </div>
+  </section>
+
+  <!-- Vertical Videos -->
   <section id="vertical-videos" class="py-20 bg-white">
     <div class="max-w-[980px] mx-auto px-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-black mb-8 text-center">Some Videos of My art!</h2>
+      <h2 class="text-4xl md:text-5xl font-bold text-black mb-10 text-center">Some Videos of My art!</h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Example card: video elements have playsinline + muted -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Video 1 -->
         <div class="rounded-3xl overflow-hidden shadow-subtle bg-black aspect-[3/4]">
           <video controls playsinline preload="metadata" poster="20.jpg" class="w-full h-full object-cover hover-autoplay" muted>
             <source src="v1.mp4" type="video/mp4">
@@ -137,9 +344,26 @@
           </video>
         </div>
 
+        <!-- Video 2 -->
         <div class="rounded-3xl overflow-hidden shadow-subtle bg-black aspect-[3/4]">
           <video controls playsinline preload="metadata" poster="22.jpg" class="w-full h-full object-cover hover-autoplay" muted>
             <source src="v2.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <!-- Video 3 -->
+        <div class="rounded-3xl overflow-hidden shadow-subtle bg-black aspect-[3/4]">
+          <video controls playsinline preload="metadata" poster="24.jpg" class="w-full h-full object-cover hover-autoplay" muted>
+            <source src="v5.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <!-- Video 4 -->
+        <div class="rounded-3xl overflow-hidden shadow-subtle bg-black aspect-[3/4]">
+          <video controls playsinline preload="metadata" poster="00.jpg" class="w-full h-full object-cover hover-autoplay" muted>
+            <source src="v6.mp4" type="video/mp4">
             Your browser does not support HTML5 video.
           </video>
         </div>
@@ -147,88 +371,157 @@
     </div>
   </section>
 
-  <!-- Why Choose My Artistry -->
-  <section id="why-choose" class="py-24 bg-white">
-    <div class="max-w-[1100px] mx-auto px-6 text-center">
-      <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">Why Choose My Artistry?</h2>
-      <p class="text-lg md:text-xl text-apple-text mb-16 max-w-2xl mx-auto">Combining artistic excellence with professional service to deliver murals that exceed expectations</p>
+<!-- Why Choose My Artistry -->
+<section id="why-choose" class="py-24 bg-white">
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
-          <div class="text-4xl md:text-5xl mb-3">🎨</div>
-          <h3 class="text-xl font-semibold mb-2">Custom Design Process</h3>
-          <p class="text-apple-text">Every mural is uniquely designed to match your space, style, and vision through collaborative consultation.</p>
-        </div>
-        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
-          <div class="text-4xl md:text-5xl mb-3">⭐</div>
-          <h3 class="text-xl font-semibold mb-2">Professional Quality</h3>
-          <p class="text-apple-text">Premium paints + refined techniques produce vibrant artwork that lasts for years.</p>
-        </div>
-        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
-          <div class="text-4xl md:text-5xl mb-3">🏡</div>
-          <h3 class="text-xl font-semibold mb-2">Space Transformation</h3>
-          <p class="text-apple-text">Expert ability to elevate architectural features & create extraordinary focal points.</p>
-        </div>
-        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
-          <div class="text-4xl md:text-5xl mb-3">🎭</div>
-          <h3 class="text-xl font-semibold mb-2">Diverse Styles</h3>
-          <p class="text-apple-text">Artistic range from photorealistic to abstract, botanical to geometric, contemporary to traditional.</p>
-        </div>
-        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
-          <div class="text-4xl md:text-5xl mb-3">📋</div>
-          <h3 class="text-xl font-semibold mb-2">Project Management</h3>
-          <p class="text-apple-text">Clear planning, communication, and timelines from concept to final installation.</p>
-        </div>
-        <div class="bg-white shadow-subtle rounded-3xl p-8 md:p-10">
-          <div class="text-4xl md:text-5xl mb-3">✅</div>
-          <h3 class="text-xl font-semibold mb-2">Satisfaction Guarantee</h3>
-          <p class="text-apple-text">Complete satisfaction ensured with revisions and quality assurance throughout the process.</p>
-        </div>
+  <div class="max-w-[1100px] mx-auto px-6 text-center">
+    
+    <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">
+      Why Choose My Artistry?
+    </h2>
+
+    <p class="text-lg md:text-xl text-apple-text mb-16 max-w-2xl mx-auto">
+      Combining artistic excellence with professional service to deliver murals that exceed expectations
+    </p>
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- Card 1 -->
+      <div class="bg-white shadow-subtle rounded-3xl p-10">
+        <div class="text-5xl mb-4">🎨</div>
+        <h3 class="text-xl font-semibold mb-2">Custom Design Process</h3>
+        <p class="text-apple-text">
+          Every mural is uniquely designed to match your space, style, and vision through collaborative consultation.
+        </p>
       </div>
-    </div>
-  </section>
 
-  <!-- My Creative Process -->
-  <section class="py-24 bg-apple-gray/30">
-    <div class="max-w-[1100px] mx-auto px-6 text-center">
-      <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">My Creative Process</h2>
-      <p class="text-lg md:text-xl text-apple-text mb-16 max-w-2xl mx-auto">A structured approach ensuring your vision comes to life exactly as imagined</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
-        <div>
-          <div class="w-20 h-20 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-xl font-semibold mb-4">01</div>
-          <h3 class="text-lg font-semibold mb-2">Consultation</h3>
-          <p class="text-apple-text">We discuss your vision, space, style preferences, and project requirements in detail.</p>
-        </div>
-
-        <div>
-          <div class="w-20 h-20 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-xl font-semibold mb-4">02</div>
-          <h3 class="text-lg font-semibold mb-2">Design Development</h3>
-          <p class="text-apple-text">Initial sketches & concepts refined based on your feedback.</p>
-        </div>
-
-        <div>
-          <div class="w-20 h-20 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-xl font-semibold mb-4">03</div>
-          <h3 class="text-lg font-semibold mb-2">Preparation</h3>
-          <p class="text-apple-text">Wall preparation, priming, and workspace setup for optimal painting conditions.</p>
-        </div>
-
-        <div>
-          <div class="w-20 h-20 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-xl font-semibold mb-4">04</div>
-          <h3 class="text-lg font-semibold mb-2">Creation</h3>
-          <p class="text-apple-text">Detailed painting with regular progress updates.</p>
-        </div>
-
-        <div>
-          <div class="w-20 h-20 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-xl font-semibold mb-4">05</div>
-          <h3 class="text-lg font-semibold mb-2">Finishing</h3>
-          <p class="text-apple-text">Premium paints. UV-resistant topcoat and final detailing.</p>
-        </div>
+      <!-- Card 2 -->
+      <div class="bg-white shadow-subtle rounded-3xl p-10">
+        <div class="text-5xl mb-4">⭐</div>
+        <h3 class="text-xl font-semibold mb-2">Professional Quality</h3>
+        <p class="text-apple-text">
+          Premium paints + refined techniques produce vibrant artwork that lasts for years.
+        </p>
       </div>
-    </div>
-  </section>
 
-  <!-- Contact (unchanged) -->
+      <!-- Card 3 -->
+      <div class="bg-white shadow-subtle rounded-3xl p-10">
+        <div class="text-5xl mb-4">🏡</div>
+        <h3 class="text-xl font-semibold mb-2">Space Transformation</h3>
+        <p class="text-apple-text">
+          Expert ability to elevate architectural features & create extraordinary focal points.
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="bg-white shadow-subtle rounded-3xl p-10">
+        <div class="text-5xl mb-4">🎭</div>
+        <h3 class="text-xl font-semibold mb-2">Diverse Styles</h3>
+        <p class="text-apple-text">
+          Artistic range from photorealistic to abstract, botanical to geometric, contemporary to traditional.
+        </p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="bg-white shadow-subtle rounded-3xl p-10">
+        <div class="text-5xl mb-4">📋</div>
+        <h3 class="text-xl font-semibold mb-2">Project Management</h3>
+        <p class="text-apple-text">
+          Clear planning, communication, and timelines from concept to final installation.
+        </p>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="bg-white shadow-subtle rounded-3xl p-10">
+        <div class="text-5xl mb-4">✅</div>
+        <h3 class="text-xl font-semibold mb-2">Satisfaction Guarantee</h3>
+        <p class="text-apple-text">
+          Complete satisfaction ensured with revisions and quality assurance throughout the process.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- My Creative Process -->
+<section class="py-24 bg-apple-gray/30">
+  <div class="max-w-[1100px] mx-auto px-6 text-center">
+
+    <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">
+      My Creative Process
+    </h2>
+
+    <p class="text-lg md:text-xl text-apple-text mb-16 max-w-2xl mx-auto">
+      A structured approach ensuring your vision comes to life exactly as imagined
+    </p>
+
+    <!-- Steps -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-12">
+
+      <!-- Step 1 -->
+      <div>
+        <div class="w-24 h-24 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-2xl font-semibold mb-4">
+          01
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Consultation</h3>
+        <p class="text-apple-text">
+          We discuss your vision, space, style preferences, and project requirements in detail.
+        </p>
+      </div>
+
+      <!-- Step 2 -->
+      <div>
+        <div class="w-24 h-24 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-2xl font-semibold mb-4">
+          02
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Design Development</h3>
+        <p class="text-apple-text">
+          Initial sketches & concepts refined based on your feedback.
+        </p>
+      </div>
+
+      <!-- Step 3 -->
+      <div>
+        <div class="w-24 h-24 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-2xl font-semibold mb-4">
+          03
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Preparation</h3>
+        <p class="text-apple-text">
+          Wall preparation, priming, and workspace setup for optimal painting conditions.
+        </p>
+      </div>
+
+      <!-- Step 4 -->
+      <div>
+        <div class="w-24 h-24 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-2xl font-semibold mb-4">
+          04
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Creation</h3>
+        <p class="text-apple-text">
+          Detailed painting with regular progress updates.
+        </p>
+      </div>
+
+      <!-- Step 5 -->
+      <div>
+        <div class="w-24 h-24 rounded-full bg-yellow-400 mx-auto flex items-center justify-center text-black text-2xl font-semibold mb-4">
+          05
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Finishing</h3>
+        <p class="text-apple-text">
+          Premium paints. UV-resistant topcoat.Workspace protection.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Contact -->
   <section id="contact" class="py-32 bg-white">
     <div class="max-w-2xl mx-auto px-6 text-center reveal-element">
       <h2 class="text-4xl md:text-5xl font-bold text-black mb-6">Let's create something.</h2>
@@ -245,20 +538,68 @@
           <button type="submit" class="px-12 py-4 bg-black text-white rounded-full font-medium text-lg hover:scale-105 transition-transform">Send Message</button>
         </div>
       </form>
+
+      <!-- Socials -->
+      <div class="mt-8 text-center reveal-element">
+        <div class="max-w-md mx-auto">
+          <div class="border-t border-gray-200/60 pt-6">
+            <p class="text-sm text-apple-text mb-3">Follow our work or say hi</p>
+
+            <div class="flex items-center justify-center gap-3">
+              <a href="https://www.instagram.com/knock.knock.art" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 transition"
+                 aria-label="Instagram">
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+              </a>
+
+              <a href="https://www.behance.net/yourhandle" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 transition"
+                 aria-label="Behance">
+                <i data-lucide="behance" class="w-5 h-5"></i>
+              </a>
+
+              <a href="https://dribbble.com/yourhandle" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 transition"
+                 aria-label="Dribbble">
+                <i data-lucide="dribbble" class="w-5 h-5"></i>
+              </a>
+
+              <a href="https://www.linkedin.com/in/yourhandle" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 transition"
+                 aria-label="LinkedIn">
+                <i data-lucide="linkedin" class="w-5 h-5"></i>
+              </a>
+
+              <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 transition"
+                 aria-label="YouTube">
+                <i data-lucide="youtube" class="w-5 h-5"></i>
+              </a>
+            </div>
+
+            <div class="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-sm">
+              <a href="knock.knock.art13@gmail.com" class="text-apple-text hover:text-black transition">knock.knock.art13@gmail.com</a>
+              <span class="text-apple-text">•</span>
+              <a href="tel:+916360565989" class="text-apple-text hover:text-black transition">+91 63605 65989</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- TRANSPARENT GLASS BOTTOM BAR (smaller on mobile) -->
-  <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[60] w-[94%] max-w-xl md:bottom-6 md:w-[90%]">
-    <div class="w-full flex items-center justify-between gap-3 px-3 py-2 glass-bottom" role="navigation" aria-label="quick actions">
-      <a href="#gallery" class="flex-1 text-center py-2 rounded-2xl font-semibold bg-white/3 hover:bg-white/6 text-black transition-all">View Portfolio</a>
-      <a href="#why-choose" class="flex-1 text-center py-2 rounded-2xl font-medium bg-white/3 hover:bg-white/6 text-black transition-all">Learn more</a>
+  <!-- GLASS BOTTOM BAR -->
+  <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] w-[90%] max-w-xl">
+    <div class="w-full flex items-center justify-between gap-4 px-4 py-3 glass-bottom">
+      <a href="#gallery" class="flex-1 text-center py-2 rounded-2xl font-semibold bg-white/5 hover:bg-white/10 text-black transition-all">View Portfolio</a>
+      <!-- changed to #contact since top nav removed Workshops -->
+      <a href="#why-choose" class="flex-1 text-center py-2 rounded-2xl font-medium bg-white/5 hover:bg-white/10 text-black transition-all">Learn more</a>
     </div>
   </div>
 
   <div class="h-28 md:h-20"></div>
 
-  <!-- footer (unchanged) -->
   <footer class="bg-apple-gray py-12 border-t border-gray-200">
     <div class="max-w-[980px] mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -273,22 +614,23 @@
     </div>
   </footer>
 
-  <!-- Lightbox (unchanged) -->
+  <!-- Lightbox -->
   <div id="lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/70 p-6">
     <div class="max-w-[1100px] w-full relative">
       <button id="lightbox-close" class="absolute top-3 right-3 p-2 rounded-full bg-white/90 z-20" aria-label="Close lightbox">
         <i data-lucide="x" class="w-5 h-5 text-black"></i>
       </button>
+
       <img id="lightbox-image" class="w-full rounded-2xl shadow-2xl hidden" alt="Enlarged photo" />
       <video id="lightbox-video" class="w-full rounded-2xl shadow-2xl hidden" controls playsinline></video>
     </div>
   </div>
 
-  <!-- SCRIPTS -->
+  <!-- Scripts (at end for faster paint) -->
   <script>
     lucide.createIcons();
 
-    // small helpers & intersection reveal (unchanged)
+    // Intersection reveal
     const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -298,26 +640,131 @@
         }
       });
     }, observerOptions);
+
     document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
 
-    // Mobile menu toggle - improved aria handling
+    // Canvas fluid blobs - simplified & safe checks
     (function(){
-      const menuBtn = document.getElementById('mobile-menu-btn');
-      const closeBtn = document.getElementById('close-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      if (!menuBtn || !mobileMenu) return;
-      function toggleMenu() {
-        const opened = mobileMenu.classList.toggle('translate-x-full');
-        document.body.classList.toggle('overflow-hidden');
-        menuBtn.setAttribute('aria-expanded', String(!opened));
-        mobileMenu.setAttribute('aria-hidden', String(opened));
+      const canvas = document.getElementById('hero-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const scale = window.devicePixelRatio || 1;
+      let width = 0, height = 0;
+      const colors = [{r:0,g:113,b:227},{r:255,g:100,b:100},{r:100,g:200,b:255},{r:245,g:245,b:247}];
+      let particles = [];
+
+      class Particle {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * 0.5;
+          this.vy = (Math.random() - 0.5) * 0.5;
+          this.radius = Math.random() * 200 + 100;
+          this.color = colors[Math.floor(Math.random() * (colors.length - 1))];
+          this.alpha = Math.random() * 0.25 + 0.05;
+        }
+        update() {
+          this.x += this.vx; this.y += this.vy;
+          if (this.x < -200 || this.x > width + 200 || this.y < -200 || this.y > height + 200) this.reset();
+        }
+        draw() {
+          const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+          gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`);
+          gradient.addColorStop(1, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0)`);
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
-      menuBtn.addEventListener('click', toggleMenu);
-      if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
-      document.querySelectorAll('.nav-link-mobile').forEach(a => a.addEventListener('click', toggleMenu));
+
+      function resize() {
+        width = canvas.parentElement.offsetWidth;
+        height = canvas.parentElement.offsetHeight || window.innerHeight * 0.6;
+        canvas.width = Math.max(1, Math.floor(width * scale));
+        canvas.height = Math.max(1, Math.floor(height * scale));
+        ctx.setTransform(scale, 0, 0, scale, 0, 0);
+        particles = [];
+        for (let i = 0; i < 7; i++) particles.push(new Particle());
+      }
+
+      function animate() {
+        ctx.clearRect(0,0,width,height);
+        particles.forEach(p=>{ p.update(); p.draw(); });
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      animate();
     })();
 
-    // lightbox (unchanged from your code)
+    // Custom cursor
+    (function(){
+      const cursor = document.getElementById('cursorDot');
+      if (!cursor) return;
+      window.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+      const interactive = document.querySelectorAll('a, button, .bento-card, input, textarea');
+      interactive.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width = '20px';
+          cursor.style.height = '20px';
+          cursor.style.backgroundColor = 'rgba(0,113,227,0.18)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width = '8px';
+          cursor.style.height = '8px';
+          cursor.style.backgroundColor = 'black';
+        });
+      });
+    })();
+
+    // Gallery filter logic
+    (function(){
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => { b.classList.remove('bg-white','shadow-sm','text-black'); b.classList.add('text-apple-text'); });
+          btn.classList.add('bg-white','shadow-sm','text-black'); btn.classList.remove('text-apple-text');
+          const filter = btn.dataset.filter;
+          galleryItems.forEach(item => {
+            if (filter === 'all' || item.classList.contains(filter)) {
+              item.style.display = 'block';
+              setTimeout(() => item.style.opacity = '1', 10);
+            } else {
+              item.style.opacity = '0';
+              setTimeout(() => item.style.display = 'none', 300);
+            }
+          });
+        });
+      });
+    })();
+
+    // Mobile menu toggle
+    (function(){
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const closeMenuBtn = document.getElementById('close-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileLinks = document.querySelectorAll('.nav-link-mobile');
+      if (menuBtn && mobileMenu) {
+        function toggleMenu() {
+          mobileMenu.classList.toggle('translate-x-full');
+          document.body.classList.toggle('overflow-hidden');
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+      }
+    })();
+
+    // Lightbox functionality
     (function() {
       const lightbox = document.getElementById('lightbox');
       const lbImage = document.getElementById('lightbox-image');
@@ -338,9 +785,17 @@
           lbVideo.src = src;
           lbVideo.classList.remove('hidden');
           lbVideo.muted = true;
-          lbVideo.play().catch(()=>{});
+          lbVideo.play().catch(()=>{ /* user may press play */ });
         }
         lightbox.classList.remove('hidden'); document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        if (!lightbox) return;
+        lightbox.classList.add('hidden');
+        if (lbVideo) { lbVideo.pause(); lbVideo.currentTime = 0; lbVideo.removeAttribute('src'); lbVideo.classList.add('hidden'); }
+        if (lbImage) { lbImage.removeAttribute('src'); lbImage.classList.add('hidden'); }
+        document.body.style.overflow = '';
       }
 
       document.addEventListener('click', (e) => {
@@ -355,6 +810,7 @@
             openImage(img.src, img.alt || '');
           }
         }
+
         const playBtn = e.target.closest('.open-lightbox');
         if (playBtn && playBtn.dataset && playBtn.dataset.type === 'video') {
           const src = playBtn.dataset.src || playBtn.getAttribute('data-src');
@@ -362,74 +818,27 @@
         }
       });
 
-      if (closeBtn) closeBtn.addEventListener('click', () => {
-        lightbox.classList.add('hidden');
-        if (lbVideo) { lbVideo.pause(); lbVideo.currentTime = 0; lbVideo.removeAttribute('src'); lbVideo.classList.add('hidden'); }
-        if (lbImage) { lbImage.removeAttribute('src'); lbImage.classList.add('hidden'); }
-        document.body.style.overflow = '';
-      });
-
+      if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
       if (lightbox) {
-        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeBtn.click(); });
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
       }
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox && !lightbox.classList.contains('hidden')) closeBtn.click(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox && !lightbox.classList.contains('hidden')) closeLightbox(); });
     })();
 
-    // Hover-autoplay for desktop + touch handlers for mobile
+    // Video autoplay on hover (muted to satisfy autoplay policies)
     (function(){
-      const vids = document.querySelectorAll('video.hover-autoplay');
-
-      vids.forEach(v => {
-        // Desktop hover play/pause (mouse)
+      const hoverVideos = document.querySelectorAll('video.hover-autoplay');
+      hoverVideos.forEach(v => {
         v.addEventListener('mouseenter', async () => {
           v.muted = true;
-          try { await v.play(); } catch(e) { /* ignore */ }
+          try { await v.play(); } catch(e) { /* if blocked, do nothing */ }
         });
         v.addEventListener('mouseleave', () => {
-          v.pause(); v.currentTime = 0;
-        });
-
-        // Touch: single tap toggles play/pause (mobile-friendly)
-        v.addEventListener('touchstart', function touchStartHandler(e) {
-          // if controls present, allow default tap to show controls; but we still toggle
-          if (v.paused) {
-            v.muted = true;
-            v.play().catch(()=>{});
-          } else {
-            v.pause();
-            v.currentTime = 0;
-          }
-          // prevent accidental double handling
-          e.stopPropagation();
-        }, { passive: true });
-      });
-    })();
-
-    // Custom cursor only on non-touch devices
-    (function(){
-      const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-      const cursor = document.getElementById('cursorDot');
-      if (!cursor || isTouch) return;
-      window.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-      });
-      const interactive = document.querySelectorAll('a, button, .bento-card, input, textarea');
-      interactive.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-          cursor.style.width = '20px';
-          cursor.style.height = '20px';
-          cursor.style.backgroundColor = 'rgba(0,113,227,0.18)';
-        });
-        el.addEventListener('mouseleave', () => {
-          cursor.style.width = '8px';
-          cursor.style.height = '8px';
-          cursor.style.backgroundColor = 'black';
+          v.pause();
+          v.currentTime = 0;
         });
       });
     })();
-
-    // NOTE: other scripts (canvas blobs, gallery filters) can remain as you had them.
   </script>
 </body>
 </html>
