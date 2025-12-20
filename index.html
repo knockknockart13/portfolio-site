@@ -299,11 +299,6 @@
           <h2 class="text-4xl md:text-5xl font-bold text-black mb-2">Gallery.</h2>
           <p class="text-xl text-apple-text">A collection of moments.</p>
         </div>
-        <div class="flex space-x-1 bg-apple-gray p-1 rounded-full mt-6 md:mt-0">
-          <button class="filter-btn active px-4 py-1.5 rounded-full text-xs font-medium text-black bg-white shadow-sm transition-all" data-filter="all">All</button>
-          <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium text-apple-text hover:text-black transition-all" data-filter="mural">Murals</button>
-          <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium text-apple-text hover:text-black transition-all" data-filter="canvas">Canvas</button>
-        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -804,28 +799,6 @@
       });
     })();
 
-    // Gallery filter logic
-    (function(){
-      const filterBtns = document.querySelectorAll('.filter-btn');
-      const galleryItems = document.querySelectorAll('.gallery-item');
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => { b.classList.remove('bg-white','shadow-sm','text-black'); b.classList.add('text-apple-text'); });
-          btn.classList.add('bg-white','shadow-sm','text-black'); btn.classList.remove('text-apple-text');
-          const filter = btn.dataset.filter;
-          galleryItems.forEach(item => {
-            if (filter === 'all' || item.classList.contains(filter)) {
-              item.style.display = 'block';
-              setTimeout(() => item.style.opacity = '1', 10);
-            } else {
-              item.style.opacity = '0';
-              setTimeout(() => item.style.display = 'none', 300);
-            }
-          });
-        });
-      });
-    })();
-
     // Mobile menu toggle
     (function(){
       const menuBtn = document.getElementById('mobile-menu-btn');
@@ -921,3 +894,4 @@
   </script>
 </body>
 </html>
+
