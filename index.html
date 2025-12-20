@@ -162,76 +162,134 @@
   </header>
 
   <!-- Services -->
-  <section id="services" class="py-32 bg-apple-gray">
-    <div class="max-w-[980px] mx-auto px-6">
-      <!-- Studio Introduction -->
-<p class="text-sm md:text-base text-apple-text max-w-2xl mb-6 reveal-element">
-  We’re a Bengaluru-based creative studio specializing in wall paintings, commissioned artwork,
-  and workshops. Born from the belief that art can both heal and change the world, we create work
-  that serves, inspires, and makes an impact. Our approach is simple: beauty and purpose aren’t
-  mutually exclusive — they’re inseparable.
-</p>
+<section id="services" class="py-32 bg-apple-gray">
+  <div class="max-w-[980px] mx-auto px-6">
 
-      <div class="mb-16 reveal-element">        
-        <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">Our Craft.</h2>
-        <p class="text-xl text-apple-text max-w-lg">Designed to inspire. Built to last.</p>
-      </div>
+    <!-- Studio Introduction -->
+    <p class="text-sm md:text-base text-apple-text max-w-2xl mx-auto mb-10 text-center reveal-element">
+      We’re a Bengaluru-based creative studio specializing in wall paintings, commissioned artwork,
+      and workshops. Born from the belief that art can both heal and change the world, we create work
+      that serves, inspires, and makes an impact. Our approach is simple: beauty and purpose aren’t
+      mutually exclusive — they’re inseparable.
+    </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 grid-rows-2 h-auto md:h-[600px]">
-        <div class="bg-white rounded-3xl p-8 md:col-span-2 row-span-2 bento-card relative overflow-hidden group reveal-element">
-          <div class="relative z-10 h-full flex flex-col justify-between">
-            <div>
-              <p class="text-sm font-semibold text-apple-text uppercase tracking-wide mb-2">Large Scale</p>
-              <h3 class="text-3xl font-bold text-black mb-2">Murals & Street Art</h3>
-              <p class="text-apple-text text-lg max-w-sm">Transforming dull walls into vibrant storytelling canvases for businesses and communities.</p>
-            </div>
-            <div class="mt-8">
-              <a href="murals.html" class="inline-flex items-center text-apple-blue font-medium hover:underline">
-  View Murals <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
-            </div>
-          </div>
-          <img src="16.jpg" class="absolute right-0 bottom-0 w-2/3 h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" alt="Mural preview">
-          <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
-        </div>
-
-        <div class="relative bg-white rounded-3xl p-8 overflow-hidden bento-card reveal-element">
-          <div class="relative z-10 h-full flex flex-col justify-between">
-            <div>
-              <p class="text-sm font-semibold text-apple-text uppercase tracking-wide mb-2">Hands-on</p>
-              <h3 class="text-3xl font-bold text-black mb-2">Workshops</h3>
-              <p class="text-apple-text text-lg max-w-sm">Pottery, resin, acrylics & guided art sessions.</p>
-            </div>
-            <div class="mt-8">
-          <a href="workshops.html" class="inline-flex items-center text-apple-blue font-medium hover:underline">
-  View Workshops <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
-</a>
-          </div>
-          </div>
-          
-          <img src="23.jpg" class="absolute right-0 bottom-0 w-2/3 h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" alt="Workshop preview">
-          <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
-        </div>
-
-        <div class="relative bg-white rounded-3xl p-8 overflow-hidden bento-card reveal-element">
-          <div class="relative z-10 h-full flex flex-col justify-between">
-            <div>
-              <p class="text-sm font-semibold text-apple-text uppercase tracking-wide mb-2">Custom Art</p>
-              <h3 class="text-3xl font-bold text-black mb-2">Commissions</h3>
-              <p class="text-apple-text text-lg max-w-sm">Personalized art crafted to your vision.</p>
-            </div>  
-            <div class="mt-8">
-          <a href="commissions.html" class="inline-flex items-center text-apple-blue font-medium hover:underline">
-  View Commissions <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
-</a>
-            </div>
-          </div>
-          
-          <img src="14.jpg" class="absolute right-0 bottom-0 w-2/3 h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" alt="Commission preview">
-          <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
-        </div>
-      </div>
+    <!-- Our Craft Heading -->
+    <div class="mb-16 text-center reveal-element">
+      <h2 class="text-4xl md:text-5xl font-bold text-black mb-4">Our Craft.</h2>
+      <p class="text-xl text-apple-text">Designed to inspire. Built to last.</p>
     </div>
-  </section>
+
+    <!-- CRAFT GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+
+      <!-- Murals (featured / large) -->
+      <a href="murals.html"
+         class="block md:col-span-2 focus:outline-none focus:ring-2 focus:ring-apple-blue rounded-3xl">
+        <div class="bg-white rounded-3xl p-8 h-full bento-card relative overflow-hidden group reveal-element cursor-pointer">
+
+          <div class="relative z-10 max-w-sm">
+            <p class="text-sm font-semibold text-apple-text uppercase tracking-wide mb-2">
+              Large Scale
+            </p>
+            <h3 class="text-3xl font-bold text-black mb-2">
+              Murals & Street Art
+            </h3>
+            <p class="text-apple-text text-lg">
+              Transforming dull walls into vibrant storytelling canvases for businesses and communities.
+            </p>
+          </div>
+
+          <img src="16.jpg"
+               alt="Mural preview"
+               class="absolute right-0 bottom-0 w-2/3 h-full object-cover opacity-80
+                      group-hover:scale-105 transition-transform duration-700">
+
+          <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
+        </div>
+      </a>
+
+      <!-- Workshops -->
+      <a href="workshops.html"
+         class="block focus:outline-none focus:ring-2 focus:ring-apple-blue rounded-3xl">
+        <div class="bg-white rounded-3xl p-8 h-full bento-card relative overflow-hidden reveal-element cursor-pointer">
+
+          <div class="relative z-10 max-w-sm">
+            <p class="text-sm font-semibold text-apple-text uppercase tracking-wide mb-2">
+              Hands-on
+            </p>
+            <h3 class="text-3xl font-bold text-black mb-2">
+              Workshops
+            </h3>
+            <p class="text-apple-text text-lg">
+              Pottery, resin, acrylics & guided art sessions.
+            </p>
+          </div>
+
+          <img src="23.jpg"
+               alt="Workshop preview"
+               class="absolute right-0 bottom-0 w-2/3 h-full object-cover opacity-80
+                      group-hover:scale-105 transition-transform duration-700">
+
+          <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
+        </div>
+      </a>
+
+      <!-- Commissions -->
+      <a href="commissions.html"
+         class="block focus:outline-none focus:ring-2 focus:ring-apple-blue rounded-3xl">
+        <div class="bg-white rounded-3xl p-8 h-full bento-card relative overflow-hidden reveal-element cursor-pointer">
+
+          <div class="relative z-10 max-w-sm">
+            <p class="text-sm font-semibold text-apple-text uppercase tracking-wide mb-2">
+              Custom Art
+            </p>
+            <h3 class="text-3xl font-bold text-black mb-2">
+              Portraits & Originals
+            </h3>
+            <p class="text-apple-text text-lg">
+              Personalized art crafted to your vision.
+            </p>
+          </div>
+
+          <img src="14.jpg"
+               alt="Commission preview"
+               class="absolute right-0 bottom-0 w-2/3 h-full object-cover opacity-80
+                      group-hover:scale-105 transition-transform duration-700">
+
+          <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
+        </div>
+      </a>
+
+      <!-- Products -->
+      <a href="products.html"
+         class="block focus:outline-none focus:ring-2 focus:ring-apple-blue rounded-3xl">
+        <div class="bg-white rounded-3xl p-8 h-full bento-card relative overflow-hidden reveal-element cursor-pointer">
+
+          <div class="relative z-10 max-w-sm">
+            <p class="text-sm font-semibold text-apple-text uppercase tracking-wide mb-2">
+              Art Objects
+            </p>
+            <h3 class="text-3xl font-bold text-black mb-2">
+              Products
+            </h3>
+            <p class="text-apple-text text-lg">
+              Thoughtfully designed art products crafted to bring creativity into everyday spaces.
+            </p>
+          </div>
+
+          <img src="product-preview.jpg"
+               alt="Art products preview"
+               class="absolute right-0 bottom-0 w-2/3 h-full object-cover opacity-80
+                      group-hover:scale-105 transition-transform duration-700">
+
+          <div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none"></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
 
   <!-- Gallery -->
   <section id="gallery" class="py-32 bg-white">
@@ -863,8 +921,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
