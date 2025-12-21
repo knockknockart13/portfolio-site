@@ -142,11 +142,17 @@
     </div>
 
     <!-- Background image -->
-    <img src="3.jpg" alt="Welcome to ArtFlow studio — mural & workshops"
-         loading="lazy"
-         class="absolute inset-0 m-auto max-h-[100vh] w-auto h-auto object-center"
-         style="max-width:100%;" />
-
+    <img
+  src="3.jpg"
+  alt="Welcome to ArtFlow studio — mural & workshops"
+  loading="lazy"
+  class="
+    absolute inset-0
+    w-full h-full
+    object-cover
+    object-top          /* mobile crop */
+    md:object-center    /* desktop crop */
+  "/>
     <div class="relative z-10 max-w-[980px] mx-auto px-6 py-24 lg:py-32 flex flex-col items-center text-center">
       <p class="text-sm font-medium tracking-wide mb-4 reveal-element bg-clip-text text-black" style="transition-delay: 100ms;">Welcome</p>
 
@@ -894,6 +900,7 @@
   </script>
 </body>
 </html>
+
 
 
 
