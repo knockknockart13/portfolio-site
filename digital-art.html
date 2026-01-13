@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Digital Art | Knock.Knock.Art</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-black">
+
+<!-- NAV -->
+<nav class="fixed w-full z-50 bg-white/70 backdrop-blur border-b border-gray-200/50">
+  <div class="max-w-[980px] mx-auto px-4 h-12 flex items-center justify-between">
+    <a href="index.html" class="font-semibold text-lg">Knock.Knock.Art</a>
+    <a href="index.html#services" class="text-sm text-gray-600 hover:text-black flex items-center gap-1">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+    </a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<section class="pt-32 pb-16 text-center">
+  <h1 class="text-4xl md:text-5xl font-bold mb-4">Digital Art</h1>
+  <p class="text-gray-500 max-w-xl mx-auto">
+    A curated selection of illustrations, stylized paintings, concept art, and character-focused digital artworks.
+  </p>
+</section>
+
+<!-- GALLERY (PORTRAIT MODE) -->
+<section class="pb-32">
+  <div class="max-w-[1100px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+    <!-- Example portrait artworks —— replace with your images -->
+    <div class="group cursor-pointer">
+      <div class="aspect-[3/5] overflow-hidden rounded-3xl shadow-sm">
+        <img src="da (1).jpg" class="gallery-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+      </div>
+      <h4 class="mt-3 font-semibold">Family and Friends Illustration</h4>
+    </div>
+
+    <div class="group cursor-pointer">
+      <div class="aspect-[3/5] overflow-hidden rounded-3xl shadow-sm">
+        <img src="da (2).jpg" class="gallery-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+      </div>
+      <h4 class="mt-3 font-semibold"> Digital art 2</h4>
+    </div>
+
+    <div class="group cursor-pointer">
+      <div class="aspect-[3/5] overflow-hidden rounded-3xl shadow-sm">
+        <img src="da (3).jpg" class="gallery-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+      </div>
+      <h4 class="mt-3 font-semibold">Digital Art 3</h4>
+    </div>
+
+    <div class="group cursor-pointer">
+      <div class="aspect-[3/5] overflow-hidden rounded-3xl shadow-sm">
+        <img src="da (4).png" class="gallery-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+      </div>
+      <h4 class="mt-3 font-semibold">Digital Art 4</h4>
+    </div>
+
+    
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 p-4">
+  <button id="prev" class="absolute left-4 text-white text-4xl font-bold select-none">‹</button>
+  <button id="next" class="absolute right-4 text-white text-4xl font-bold select-none">›</button>
+  <button id="lightbox-close" class="absolute top-4 right-4 bg-white rounded-full p-2 shadow text-xl">✕</button>
+  <img id="lightbox-img" class="max-w-full max-h-full rounded-2xl shadow-2xl" />
+</div>
+
+<script>
+  lucide.createIcons();
+
+  const images = Array.from(document.querySelectorAll('.gallery-img'));
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+
+  let currentIndex = 0;
+  let startX = 0;
+
+  function openLightbox(index) {
+    currentIndex = index;
+    lightboxImg.src = images[currentIndex].src;
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % images.length;
+    lightboxImg.src = images[currentIndex].src;
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    lightboxImg.src = images[currentIndex].src;
+  }
+
+  images.forEach((img, index) => {
+    img.addEventListener('click', () => openLightbox(index));
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  nextBtn.addEventListener('click', showNext);
+  prevBtn.addEventListener('click', showPrev);
+
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.classList.contains('hidden')) return;
+    if (e.key === 'ArrowRight') showNext();
+    if (e.key === 'ArrowLeft') showPrev();
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // Swipe for mobile
+  lightboxImg.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+  lightboxImg.addEventListener('touchend', e => {
+    const diff = e.changedTouches[0].clientX - startX;
+    if (diff > 50) showPrev();
+    if (diff < -50) showNext();
+  });
+</script>
+
+</body>
+</html>
