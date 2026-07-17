@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>School Murals | Knock.Knock.Art</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+    /* Infinite vertical scroll columns */
+    .scroll-viewport {
+      overflow: hidden;
+      height: 78vh;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+
+    .scroll-track {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .scroll-up   { animation: scrollUp   var(--speed, 40s) linear infinite; }
+    .scroll-down { animation: scrollDown var(--speed, 40s) linear infinite; }
+
+    @keyframes scrollUp {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
+    }
+    @keyframes scrollDown {
+      from { transform: translateY(-50%); }
+      to   { transform: translateY(0); }
+    }
+
+    /* Pause the whole track on hover for a closer look */
+    .scroll-viewport:hover .scroll-track {
+      animation-play-state: paused;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-track { animation: none !important; }
+      .scroll-viewport { height: auto; overflow: visible; -webkit-mask-image:none; mask-image:none; }
+    }
+  </style>
+</head>
+
+<body class="bg-white text-black font-sans">
+
+<!-- NAV -->
+<nav class="fixed w-full z-50 bg-white/70 backdrop-blur border-b border-gray-200/50">
+  <div class="max-w-[980px] mx-auto px-4 h-12 flex items-center justify-between">
+    <a href="index.html" class="font-semibold text-lg">Knock.Knock.Art</a>
+    <a href="murals.html" class="text-sm text-gray-600 hover:text-black">← Back to Murals</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<section class="pt-32 pb-12 text-center px-6">
+  <h1 class="text-4xl md:text-5xl font-bold mb-4">School Murals</h1>
+  <p class="text-apple-text max-w-xl mx-auto">
+    Playful, colorful wall art created to bring school hallways, classrooms, and play areas to life.
+  </p>
+</section>
+
+<!-- INFINITE 3-COLUMN GALLERY -->
+<section class="pb-32">
+  <div class="max-w-[1100px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- Column 1: scrolls up -->
+    <div class="scroll-viewport rounded-3xl">
+      <div class="scroll-track scroll-up" style="--speed:38s;">
+        <!-- set A -->
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/5] shadow-sm">
+            <img src="sh (2).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/3] shadow-sm">
+            <img src="sh (7).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-square shadow-sm">
+            <img src="sh (33).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <!-- set A duplicated for seamless loop -->
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/5] shadow-sm">
+            <img src="sh (2).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/3] shadow-sm">
+            <img src="sh (7).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-square shadow-sm">
+            <img src="sh (33).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2: scrolls down (offset for variety) -->
+    <div class="scroll-viewport rounded-3xl">
+      <div class="scroll-track scroll-down" style="--speed:32s;">
+        <!-- set B -->
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/3] shadow-sm">
+            <img src="sh (3).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-square shadow-sm">
+            <img src="sh (10).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/5] shadow-sm">
+            <img src="sh (36).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <!-- set B duplicated for seamless loop -->
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/3] shadow-sm">
+            <img src="sh (3).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-square shadow-sm">
+            <img src="sh (10).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/5] shadow-sm">
+            <img src="sh (36).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 3: scrolls up (different speed for parallax feel) -->
+    <div class="scroll-viewport rounded-3xl">
+      <div class="scroll-track scroll-up" style="--speed:45s;">
+        <!-- set C -->
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-square shadow-sm">
+            <img src="sh (4).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/5] shadow-sm">
+            <img src="sh (29).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/3] shadow-sm">
+            <img src="sh (37).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+	<div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/3] shadow-sm">
+            <img src="sh (41).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <!-- set C duplicated for seamless loop -->
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-square shadow-sm">
+            <img src="sh (4).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/5] shadow-sm">
+            <img src="sh (29).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+        <div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/3] shadow-sm">
+            <img src="sh (37).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+	<div class="group cursor-pointer">
+          <div class="overflow-hidden rounded-3xl aspect-[4/3] shadow-sm">
+            <img src="sh (41).jpg" class="school-img w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="text-center text-sm text-apple-text mt-8">Hover a column to pause it and take a closer look.</p>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 p-4">
+  <button id="lightbox-close" class="absolute top-4 right-4 bg-white rounded-full p-2 shadow text-xl">✕</button>
+  <img id="lightbox-img" class="max-w-full max-h-full rounded-2xl shadow-2xl" />
+</div>
+
+<script>
+  lucide.createIcons();
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.getElementById('lightbox-close');
+
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.school-img').forEach(img => {
+    img.addEventListener('click', () => openLightbox(img.src));
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) closeLightbox();
+  });
+</script>
+
+</body>
+</html>
